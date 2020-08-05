@@ -104,6 +104,14 @@ color: #E0B612;
     color: #FF3C5F;
     margin-top: 10px;
 }
-.notify-section{
+.notify{
     display: none;
+}
+.button-edit{
+    border: none;
+    background-color: transparent;
+    color: white;
+    width: 100%;
+    height: 100%;
+    
 }

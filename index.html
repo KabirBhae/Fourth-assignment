@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pin Generator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,40 +19,40 @@
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input class="form-control" type="text">
+                    <input id="calcPinInput" class="form-control" type="text">
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
-                              <div class="button">7</div>
-                              <div class="button">8</div>
-                              <div class="button">9</div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(7)"> 7 </button></div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(8)"> 8 </button></div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(9)"> 9 </button></div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">4</div>
-                              <div class="button">5</div>
-                              <div class="button">6</div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(4)"> 4 </button></div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(5)"> 5 </button></div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(6)"> 6 </button></div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">1</div>
-                              <div class="button">2</div>
-                              <div class="button">3</div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(1)"> 1 </button></div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(2)"> 2 </button></div>
+                              <div class="button"><button class="button-edit" onclick="clickCalcButton(3)"> 3 </button></div>
                             </div>
                             <div class="calc-button-row">
-                                <div class="button"></div>
-                                <div class="button">0</div>
-                                <div class="button">C</div>
+                                <div class="button"><button class="button-edit" onclick="clickCalcButton(-1)"> < </button></div>
+                                <div class="button"><button class="button-edit" onclick="clickCalcButton(0)"> 0 </button></div>
+                                <div class="button"><button class="button-edit" onclick="clickCalcButton(-200)"> C </button></div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
-                                <p class="action-left">3 try left</p>
+                                <button id="submitButton" onclick="submitClicked()" type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left"> <span id="numberOfTries">3</span> try left</p>
                             </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="notify-section">
-            <p class="notify">❌ Pin Didn't Match, Please try again</p>
-            <p class="notify">✅ Pin Matched... Secret door is opening for you</p>
+            <p id="pinWrong" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="pinMatched" class="notify">✅ Pin Matched... Secret door is opening for you</p>
         </div>
     </div>
 
@@ -66,14 +67,43 @@
             if(randomNumber<1000){
                 randomNumber = randomNumber + 1000;
             }
-            console.log(randomNumber);
             document.getElementById('generatePinInput').value = randomNumber;
-            
+            document.getElementById('pinMatched').style.display= "none";
+            document.getElementById('pinWrong').style.display= "none";
         })
-        
+        function clickCalcButton (valueOfTheButtonPressed){
+            var calcPinInput = document.getElementById('calcPinInput').value;
+            if (valueOfTheButtonPressed == -200){
+                calcPinInput = '';
+            }
+            else if (valueOfTheButtonPressed == -1){
+                calcPinInput = document.getElementById('calcPinInput').value.toString().slice(0, -1);  /*value is converted to a string then the last index is sliced*/
+            }
+           
+
+            else{
+                calcPinInput = calcPinInput + valueOfTheButtonPressed;
+            }
+            document.getElementById('calcPinInput').value = calcPinInput;
+        }
+        function submitClicked(){
+            if (parseInt(document.getElementById('numberOfTries').innerText) == 0){
+                var something = document.getElementById('submitButton');
+                return;
+            }
+            if (document.getElementById('generatePinInput').value == document.getElementById('calcPinInput').value){
+
+                document.getElementById('pinMatched').style.display= "block";
+            }
+            else{
+                document.getElementById('pinWrong').style.display= "block";
+                document.getElementById('numberOfTries').innerText = parseInt(document.getElementById('numberOfTries').innerText)-1;
+            }
+        }
         
 
 
     </script>
 </body>
 </html>
+
