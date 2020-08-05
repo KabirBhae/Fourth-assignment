@@ -43,7 +43,7 @@
                                 <div class="button"><button class="button-edit" onclick="clickCalcButton(-200)"> C </button></div>
                             </div>
                             <div>
-                                <button id="submitButton" onclick="submitClicked()" type="submit" class="submit-btn">Submit</button>
+                                <button onclick="submitClicked()" type="submit" class="submit-btn">Submit</button>
                                 <p class="action-left"> <span id="numberOfTries">3</span> try left</p>
                             </div>
                     </div>
@@ -79,16 +79,15 @@
             else if (valueOfTheButtonPressed == -1){
                 calcPinInput = document.getElementById('calcPinInput').value.toString().slice(0, -1);  /*value is converted to a string then the last index is sliced*/
             }
-           
-
             else{
                 calcPinInput = calcPinInput + valueOfTheButtonPressed;
             }
             document.getElementById('calcPinInput').value = calcPinInput;
         }
         function submitClicked(){
-            if (parseInt(document.getElementById('numberOfTries').innerText) == 0){
-                var something = document.getElementById('submitButton');
+            document.getElementById('pinMatched').style.display= "none";
+            document.getElementById('pinWrong').style.display= "none";
+            if (parseInt(document.getElementById('numberOfTries').innerText) == 0){;
                 return;
             }
             if (document.getElementById('generatePinInput').value == document.getElementById('calcPinInput').value){
